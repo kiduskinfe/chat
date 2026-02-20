@@ -111,20 +111,22 @@ export default class ChatWelcome {
     // Save contact
     const enable_save = brand.enable_save_contact;
 
-    // Build unified icons row (channels + social merged, icons only)
+    // Build channel buttons (Call, Telegram, WhatsApp — with text labels)
     const icon_defs = this.get_icon_defs();
-    const default_order = 'call,telegram,whatsapp,instagram,tiktok,linkedin,facebook,telegram_channel';
-    const order_str = brand.channel_icons_order || default_order;
-    const order = order_str.split(',').map(s => s.trim()).filter(Boolean);
+    const channels = [
+      { key: 'call', label: __('Call Us'), cls: 'channel-call' },
+      { key: 'telegram', label: __('Telegram'), cls: 'channel-telegram' },
+      { key: 'whatsapp', label: __('WhatsApp'), cls: 'channel-whatsapp' },
+    ];
 
-    let icons_html = '';
-    for (const key of order) {
-      const def = icon_defs[key];
+    let channel_btns_html = '';
+    for (const ch of channels) {
+      const def = icon_defs[ch.key];
       if (!def) continue;
       const tgt = def.target ? ` target="${def.target}" rel="noopener"` : '';
-      icons_html += `<a href="${def.href}"${tgt} class="chat-reach-icon ${def.cls}" title="${def.title}">${def.svg}</a>`;
+      channel_btns_html += `<a href="${def.href}"${tgt} class="chat-channel-btn ${ch.cls}">${def.svg}<span>${ch.label}</span></a>`;
     }
-    const has_icons = icons_html.length > 0;
+    const has_channels = channel_btns_html.length > 0;
 
     // Contact card (Apple-style, rectangle avatar)
     let contact_card_html = '';
@@ -160,9 +162,9 @@ export default class ChatWelcome {
         <button type='button' class='btn btn-primary btn-lg w-100' id='start-conversation'>
           ${__(cta_label)}
         </button>
-        ${has_icons ? `
+        ${has_channels ? `
           <div class='chat-channels-divider'><span>${__('Or reach us directly')}</span></div>
-          <div class='chat-reach-icons'>${icons_html}</div>
+          <div class='chat-channel-buttons'>${channel_btns_html}</div>
         ` : ''}
         ${contact_card_html}
       </div>
