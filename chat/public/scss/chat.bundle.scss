@@ -407,6 +407,31 @@ $height: 582px;
   .chat-form-header {
     padding: 16px 20px;
     border-bottom: 1px solid var(--border-color);
+    display: flex;
+    align-items: center;
+    gap: 8px;
+
+    .chat-back-btn {
+      width: 32px;
+      height: 32px;
+      border: none;
+      background: var(--control-bg);
+      border-radius: 50%;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      color: var(--text-muted);
+      transition: all 0.15s ease;
+      flex-shrink: 0;
+      padding: 0;
+
+      &:hover {
+        background: var(--gray-200);
+        color: var(--text-color);
+      }
+    }
+
     .chat-form-header-left {
       display: flex;
       align-items: center;
@@ -503,113 +528,103 @@ $height: 582px;
   display: flex;
   flex-direction: column;
   height: 100%;
+  position: relative;
+  overflow: hidden;
 
-  .chat-welcome-header {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 20px;
-    border-bottom: 1px solid var(--border-color);
-    flex-shrink: 0;
-
-    .chat-welcome-header-left {
-      display: flex;
-      align-items: center;
-      gap: 10px;
-
-      img.chat-brand-logo {
-        height: 32px;
-        width: auto;
-        max-width: 120px;
-        object-fit: contain;
-      }
-
-      .chat-brand-icon {
-        width: 32px;
-        height: 32px;
-        border-radius: 8px;
-        background: var(--primary-color);
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        svg { fill: var(--white); width: 18px; height: 18px; }
-      }
-
-      .chat-welcome-brand-name {
-        font-weight: 600;
-        font-size: $font-size-base;
-        color: var(--text-color);
-      }
-    }
-  }
-
-  .chat-247-badge {
+  // 24/7 ribbon badge — top right corner
+  .chat-247-ribbon {
+    position: absolute;
+    top: 14px;
+    right: 48px; // leave room for X close button
     display: inline-flex;
     align-items: center;
     gap: 5px;
-    background: rgba(40, 167, 69, 0.1);
-    color: var(--green);
+    background: rgba(40, 167, 69, 0.12);
+    color: #1e7e34;
     font-size: 11px;
     font-weight: 700;
-    padding: 3px 10px;
+    padding: 4px 12px;
     border-radius: 20px;
     letter-spacing: 0.3px;
     white-space: nowrap;
+    z-index: 5;
 
-    .chat-247-dot {
-      width: 6px;
-      height: 6px;
+    .chat-247-pulse {
+      width: 7px;
+      height: 7px;
       border-radius: 50%;
-      background: var(--green);
+      background: #28a745;
+      display: inline-block;
       animation: pulse247 2s infinite;
     }
   }
 
   @keyframes pulse247 {
-    0%, 100% { opacity: 1; }
-    50% { opacity: 0.4; }
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
   }
 
   .chat-welcome-hero {
-    padding: 28px 24px 16px;
+    padding: 32px 24px 12px;
     text-align: center;
     flex-shrink: 0;
 
+    .chat-welcome-logo {
+      margin-bottom: 10px;
+
+      img.chat-hero-logo {
+        height: auto;
+        width: auto;
+        max-width: 160px;
+        max-height: 72px;
+        object-fit: contain;
+      }
+
+      .chat-brand-icon {
+        width: 56px;
+        height: 56px;
+        border-radius: 14px;
+        background: var(--primary-color);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        svg { fill: var(--white); width: 26px; height: 26px; }
+      }
+    }
+
     .chat-welcome-title {
-      font-size: $font-size-xl;
+      font-size: $font-size-lg;
       font-weight: 700;
       color: var(--text-color);
-      margin-bottom: 8px;
+      margin-bottom: 4px;
       line-height: 1.3;
     }
 
     .chat-welcome-subtitle {
       font-size: $font-size-sm;
       color: var(--text-muted);
-      line-height: 1.5;
+      line-height: 1.4;
       max-width: 280px;
       margin: 0 auto;
     }
   }
 
   .chat-welcome-actions {
-    padding: 16px 24px 20px;
+    padding: 12px 24px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 12px;
+    gap: 10px;
     border-top: 1px solid var(--border-color);
     background: var(--bg-color);
     border-radius: 0 0 16px 16px;
     flex: 1;
-    overflow-y: auto;
-    min-height: 0;
 
     button {
       border-radius: 10px;
       font-size: $font-size-base;
       font-weight: 600;
-      padding: 11px;
+      padding: 10px;
       transition: all 0.2s ease;
       &:hover {
         transform: translateY(-1px);
@@ -618,13 +633,13 @@ $height: 582px;
     }
   }
 
-  // Channel divider
+  // Divider
   .chat-channels-divider {
     width: 100%;
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 2px 0;
+    margin: 0;
 
     &::before, &::after {
       content: '';
@@ -634,7 +649,7 @@ $height: 582px;
     }
 
     span {
-      font-size: 11px;
+      font-size: 10px;
       color: var(--text-light);
       white-space: nowrap;
       text-transform: uppercase;
@@ -642,100 +657,144 @@ $height: 582px;
     }
   }
 
-  // Channel buttons row
-  .chat-channel-buttons {
+  // Unified icons row (channels + social merged, icons only)
+  .chat-reach-icons {
     display: flex;
     gap: 8px;
-    width: 100%;
     justify-content: center;
+    flex-wrap: wrap;
   }
 
-  .chat-channel-btn {
-    display: inline-flex;
+  .chat-reach-icon {
+    width: 38px;
+    height: 38px;
+    border-radius: 50%;
+    background: var(--card-bg);
+    border: 1.5px solid var(--border-color);
+    display: flex;
     align-items: center;
-    gap: 6px;
-    padding: 8px 14px;
-    border-radius: 8px;
-    font-size: $font-size-xs;
-    font-weight: 600;
+    justify-content: center;
+    color: var(--text-muted);
     text-decoration: none;
     transition: all 0.2s ease;
-    border: 1px solid var(--border-color);
-    background: var(--card-bg);
-    color: var(--text-color);
-    flex: 1;
-    justify-content: center;
+
+    svg {
+      width: 18px;
+      height: 18px;
+    }
 
     &:hover {
-      transform: translateY(-1px);
-      box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+      transform: translateY(-2px);
+      box-shadow: 0 3px 10px rgba(0,0,0,0.12);
+      text-decoration: none;
+    }
+
+    // Brand colors on hover
+    &.icon-call {
+      color: var(--primary-color);
+      border-color: var(--primary-color);
+      &:hover { background: var(--primary-color); color: white; svg path { fill: white; } }
+    }
+    &.icon-telegram {
+      color: #0088cc;
+      border-color: #0088cc;
+      &:hover { background: #0088cc; color: white; svg path { fill: white; } }
+    }
+    &.icon-whatsapp {
+      color: #25D366;
+      border-color: #25D366;
+      &:hover { background: #25D366; color: white; svg path { fill: white; } }
+    }
+    &.icon-instagram {
+      color: #E1306C;
+      border-color: #E1306C;
+      &:hover { background: linear-gradient(45deg, #f09433, #e6683c, #dc2743, #cc2366, #bc1888); border-color: transparent; color: white; svg path { fill: white; } }
+    }
+    &.icon-tiktok {
+      color: #010101;
+      border-color: #010101;
+      &:hover { background: #010101; color: white; svg path { fill: white; } }
+    }
+    &.icon-linkedin {
+      color: #0A66C2;
+      border-color: #0A66C2;
+      &:hover { background: #0A66C2; color: white; svg path { fill: white; } }
+    }
+    &.icon-facebook {
+      color: #1877F2;
+      border-color: #1877F2;
+      &:hover { background: #1877F2; color: white; svg path { fill: white; } }
+    }
+  }
+
+  // Apple-style contact card (rectangle avatar)
+  .chat-contact-card {
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    width: 100%;
+    padding: 10px 12px;
+    background: var(--card-bg);
+    border: 1px solid var(--border-color);
+    border-radius: 12px;
+    text-decoration: none;
+    color: var(--text-color);
+    transition: all 0.2s ease;
+
+    &:hover {
+      background: var(--control-bg);
+      box-shadow: 0 2px 8px rgba(0,0,0,0.06);
       text-decoration: none;
       color: var(--text-color);
     }
 
-    &.whatsapp {
-      border-color: #25D366;
-      svg { color: #25D366; }
-      &:hover { background: #25D366; color: white; svg { color: white; } }
+    .chat-contact-card-avatar {
+      width: 40px;
+      height: 40px;
+      border-radius: 8px;
+      background: var(--control-bg);
+      overflow: hidden;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      flex-shrink: 0;
+
+      img {
+        width: 100%;
+        height: 100%;
+        object-fit: contain;
+        padding: 2px;
+      }
+
+      span {
+        font-size: $font-size-lg;
+        font-weight: 600;
+        color: var(--text-muted);
+      }
     }
-    &.telegram {
-      border-color: #0088cc;
-      svg { color: #0088cc; }
-      &:hover { background: #0088cc; color: white; svg { color: white; } }
+
+    .chat-contact-card-info {
+      display: flex;
+      flex-direction: column;
+      gap: 1px;
+      flex: 1;
+      min-width: 0;
+
+      .chat-contact-card-name {
+        font-weight: 600;
+        font-size: $font-size-sm;
+        color: var(--text-color);
+      }
+
+      .chat-contact-card-detail {
+        font-size: 11px;
+        color: var(--text-muted);
+      }
     }
-    &.phone {
-      border-color: var(--primary-color);
-      svg { color: var(--primary-color); }
-      &:hover { background: var(--primary-color); color: white; svg { color: white; } }
-    }
-  }
 
-  // Save contact
-  .chat-save-contact-btn {
-    display: inline-flex;
-    align-items: center;
-    gap: 6px;
-    font-size: 11px;
-    font-weight: 500;
-    color: var(--text-muted);
-    text-decoration: none;
-    padding: 4px 0;
-    transition: color 0.2s;
-
-    &:hover {
-      color: var(--primary-color);
-      text-decoration: none;
-    }
-  }
-
-  // Social icons
-  .chat-social-icons {
-    display: flex;
-    gap: 10px;
-    justify-content: center;
-    padding: 2px 0;
-  }
-
-  .chat-social-icon {
-    width: 30px;
-    height: 30px;
-    border-radius: 50%;
-    background: var(--bg-color);
-    border: 1px solid var(--border-color);
-    display: flex;
-    align-items: center;
-    justify-content: center;
-    color: var(--text-muted);
-    text-decoration: none;
-    transition: all 0.2s ease;
-
-    &:hover {
-      background: var(--primary-color);
-      border-color: var(--primary-color);
-      color: white;
-      transform: translateY(-1px);
-      text-decoration: none;
-      svg { fill: white; }
+    .chat-contact-card-arrow {
+      flex-shrink: 0;
+      color: var(--text-muted);
     }
   }
 }

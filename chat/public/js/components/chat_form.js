@@ -5,6 +5,7 @@ export default class ChatForm {
   constructor(opts) {
     this.$wrapper = opts.$wrapper;
     this.profile = opts.profile;
+    this.on_back = opts.on_back || null;
     this.setup();
   }
 
@@ -28,8 +29,15 @@ export default class ChatForm {
       ? `<img class='chat-form-logo' src='${brand.logo}' alt='${display_name}'>`
       : frappe.avatar(null, 'avatar-medium', display_name);
 
+    const back_btn_html = this.on_back
+      ? `<button type='button' class='chat-back-btn' title='${__('Back')}'>
+          <svg viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/></svg>
+        </button>`
+      : '';
+
     const header_html = `
       <div class='chat-form-header'>
+        ${back_btn_html}
         <div class='chat-form-header-left'>
           ${logo_html}
           <div class='chat-form-header-info'>
@@ -134,6 +142,9 @@ export default class ChatForm {
     const me = this;
     $('#submit-form').on('click', function () {
       me.validate_form();
+    });
+    $('.chat-back-btn').on('click', function () {
+      if (me.on_back) me.on_back();
     });
   }
 }

@@ -59,6 +59,8 @@ def download_vcard():
         lines.append(f"X-SOCIALPROFILE;TYPE=facebook:{settings.facebook_url}")
     if settings.tiktok_url:
         lines.append(f"X-SOCIALPROFILE;TYPE=tiktok:{settings.tiktok_url}")
+    if getattr(settings, 'linkedin_url', None):
+        lines.append(f"X-SOCIALPROFILE;TYPE=linkedin:{settings.linkedin_url}")
 
     # Add logo if available
     if settings.brand_logo:

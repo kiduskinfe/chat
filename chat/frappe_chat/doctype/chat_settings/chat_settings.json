@@ -39,9 +39,11 @@
   "social_links_section",
   "instagram_url",
   "tiktok_url",
+  "linkedin_url",
   "social_links_column",
   "facebook_url",
   "telegram_channel_url",
+  "channel_icons_order",
   "ai_section",
   "enable_ai",
   "auto_reply_guest",
@@ -249,6 +251,11 @@
      "label": "TikTok URL"
     },
     {
+     "fieldname": "linkedin_url",
+     "fieldtype": "Data",
+     "label": "LinkedIn URL"
+    },
+    {
      "fieldname": "social_links_column",
      "fieldtype": "Column Break"
     },
@@ -262,6 +269,13 @@
      "fieldtype": "Data",
      "label": "Telegram Channel URL",
      "description": "Content/news channel (separate from support Telegram)"
+    },
+    {
+     "default": "call,telegram,whatsapp,instagram,tiktok,linkedin,facebook,telegram_channel",
+     "description": "Comma-separated order of icons shown on the welcome screen. Available keys: call, telegram, whatsapp, instagram, tiktok, linkedin, facebook, telegram_channel",
+     "fieldname": "channel_icons_order",
+     "fieldtype": "Small Text",
+     "label": "Channel Icons Order"
     },
     {
      "fieldname": "ai_section",

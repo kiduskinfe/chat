@@ -146,7 +146,9 @@ def _get_branding_settings(chat_settings):
         "instagram_url": chat_settings.instagram_url or "",
         "tiktok_url": chat_settings.tiktok_url or "",
         "facebook_url": chat_settings.facebook_url or "",
+        "linkedin_url": chat_settings.linkedin_url or "",
         "telegram_channel_url": chat_settings.telegram_channel_url or "",
+        "channel_icons_order": chat_settings.channel_icons_order or "call,telegram,whatsapp,instagram,tiktok,linkedin,facebook,telegram_channel",
     }
 
 
