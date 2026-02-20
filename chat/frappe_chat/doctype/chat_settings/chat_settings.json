@@ -26,6 +26,22 @@
   "bubble_icon",
   "footer_text",
   "footer_link",
+  "contact_channels_section",
+  "show_24_7_badge",
+  "support_hours_text",
+  "whatsapp_number",
+  "telegram_link",
+  "contact_channels_column",
+  "phone_number",
+  "company_email",
+  "company_address",
+  "enable_save_contact",
+  "social_links_section",
+  "instagram_url",
+  "tiktok_url",
+  "social_links_column",
+  "facebook_url",
+  "telegram_channel_url",
   "ai_section",
   "enable_ai",
   "auto_reply_guest",
@@ -155,6 +171,97 @@
      "fieldname": "footer_link",
      "fieldtype": "Data",
      "label": "Footer Link"
+    },
+    {
+     "fieldname": "contact_channels_section",
+     "fieldtype": "Section Break",
+     "label": "Contact Channels"
+    },
+    {
+     "default": "1",
+     "fieldname": "show_24_7_badge",
+     "fieldtype": "Check",
+     "label": "Show 24/7 Badge",
+     "description": "Display a 24/7 support badge in the chat header"
+    },
+    {
+     "default": "24/7",
+     "fieldname": "support_hours_text",
+     "fieldtype": "Data",
+     "label": "Support Hours Text",
+     "description": "Text shown in the badge (e.g. 24/7, Mon-Fri, etc.)",
+     "depends_on": "show_24_7_badge"
+    },
+    {
+     "fieldname": "whatsapp_number",
+     "fieldtype": "Data",
+     "label": "WhatsApp Number",
+     "description": "International format e.g. +251978077878"
+    },
+    {
+     "fieldname": "telegram_link",
+     "fieldtype": "Data",
+     "label": "Telegram Link",
+     "description": "e.g. https://t.me/addisfly or https://t.me/+251978077878"
+    },
+    {
+     "fieldname": "contact_channels_column",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "phone_number",
+     "fieldtype": "Data",
+     "label": "Phone Number",
+     "description": "Direct call number e.g. +251978077878"
+    },
+    {
+     "fieldname": "company_email",
+     "fieldtype": "Data",
+     "label": "Company Email",
+     "options": "Email"
+    },
+    {
+     "fieldname": "company_address",
+     "fieldtype": "Small Text",
+     "label": "Company Address",
+     "description": "Used in saved contact vCard"
+    },
+    {
+     "default": "1",
+     "fieldname": "enable_save_contact",
+     "fieldtype": "Check",
+     "label": "Enable Save Contact",
+     "description": "Show a Save Contact button that downloads a vCard"
+    },
+    {
+     "fieldname": "social_links_section",
+     "fieldtype": "Section Break",
+     "label": "Social Links"
+    },
+    {
+     "fieldname": "instagram_url",
+     "fieldtype": "Data",
+     "label": "Instagram URL"
+    },
+    {
+     "fieldname": "tiktok_url",
+     "fieldtype": "Data",
+     "label": "TikTok URL"
+    },
+    {
+     "fieldname": "social_links_column",
+     "fieldtype": "Column Break"
+    },
+    {
+     "fieldname": "facebook_url",
+     "fieldtype": "Data",
+     "label": "Facebook URL"
+    },
+    {
+     "fieldname": "telegram_channel_url",
+     "fieldtype": "Data",
+     "label": "Telegram Channel URL",
+     "description": "Content/news channel (separate from support Telegram)"
     },
     {
      "fieldname": "ai_section",

@@ -135,6 +135,18 @@ def _get_branding_settings(chat_settings):
         "bubble_icon": chat_settings.bubble_icon or "Chat",
         "footer_text": chat_settings.footer_text or "",
         "footer_link": chat_settings.footer_link or "",
+        "show_24_7_badge": 1 if chat_settings.show_24_7_badge else 0,
+        "support_hours_text": chat_settings.support_hours_text or "24/7",
+        "whatsapp_number": chat_settings.whatsapp_number or "",
+        "telegram_link": chat_settings.telegram_link or "",
+        "phone_number": chat_settings.phone_number or "",
+        "company_email": chat_settings.company_email or "",
+        "company_address": chat_settings.company_address or "",
+        "enable_save_contact": 1 if chat_settings.enable_save_contact else 0,
+        "instagram_url": chat_settings.instagram_url or "",
+        "tiktok_url": chat_settings.tiktok_url or "",
+        "facebook_url": chat_settings.facebook_url or "",
+        "telegram_channel_url": chat_settings.telegram_channel_url or "",
     }
 
 
