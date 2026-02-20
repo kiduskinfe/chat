@@ -9,9 +9,9 @@ from chat import __version__ as version
 setup(
     name='chat',
     version=version,
-    description='Chat application for frappe',
-    author='Frappe Technologies Pvt. Ltd.',
-    author_email='hello@frappe.io',
+    description='Chat application for Frappe',
+    author='OLY Technologies',
+    author_email='kidus@oly.et',
     packages=find_packages(),
     zip_safe=False,
     include_package_data=True,

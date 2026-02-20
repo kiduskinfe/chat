@@ -1,4 +1,4 @@
-# Copyright (c) 2021, Frappe Technologies Pvt. Ltd. and Contributors
+# Copyright (c) 2025, OLY Technologies and Contributors
 # MIT License. See license.txt
 
 import frappe

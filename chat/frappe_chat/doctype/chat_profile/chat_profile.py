@@ -1,4 +1,4 @@
-# Copyright (c) 2021, codescientist703 and contributors
+# Copyright (c) 2025, OLY Technologies and contributors
 # For license information, please see license.txt
 
 import frappe

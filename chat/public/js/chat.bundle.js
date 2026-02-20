@@ -1,5 +1,5 @@
-// frappe.Chat
-// Author - Nihal Mittal <nihal@erpnext.com>
+// OLY Chat
+// Maintained by Kidus Kinfe <kidus@oly.et> — OLY Technologies
 
 import {
   ChatBubble,
