@@ -146,7 +146,7 @@ export default class ChatWelcome {
     }
 
     const html = `
-      ${show_badge ? `<div class='chat-247-ribbon'><span class='chat-247-pulse'></span>${__(badge_text)}</div>` : ''}
+      ${show_badge ? `<div class='chat-247-ribbon'><span class='chat-247-pulse'></span>${__(badge_text)}<span class='chat-ribbon-line'>${__('Support')}</span></div>` : ''}
       <div class='chat-welcome-hero'>
         <div class='chat-welcome-logo'>
           ${logo_html}
