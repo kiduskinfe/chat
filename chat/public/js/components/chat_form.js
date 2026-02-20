@@ -16,54 +16,69 @@ export default class ChatForm {
   }
 
   setup_header() {
-    this.avatar_html = frappe.avatar(null, 'avatar-medium', this.profile.name);
+    const brand = this.profile.brand || {};
+    const display_name = brand.name || this.profile.name;
+    const is_online = this.profile.chat_status === 'Online';
+    const status_text = is_online
+      ? (brand.online_status_text || __('We are online'))
+      : (brand.offline_status_text || __('We are offline'));
+    const status_class = is_online ? 'online' : 'offline';
+
+    const logo_html = brand.logo
+      ? `<img class='chat-form-logo' src='${brand.logo}' alt='${display_name}'>`
+      : frappe.avatar(null, 'avatar-medium', display_name);
+
     const header_html = `
-			<div class='chat-header mb-2'>
-				${this.avatar_html}
-				<div class='chat-profile-info'>
-					<div class='chat-profile-name'>
-						${__(this.profile.name)}
-						<div class='online-circle'></div>
-					</div>
-					<div class='chat-profile-status'>${__('Typically replies in a few hours')}</div>
-				</div>
-			</div>
-		`;
+      <div class='chat-form-header'>
+        <div class='chat-form-header-left'>
+          ${logo_html}
+          <div class='chat-form-header-info'>
+            <span class='chat-form-header-name'>${__(display_name)}</span>
+            <div class='chat-status-badge sm ${status_class}'>
+              <span class='status-dot'></span>
+              <span>${__(status_text)}</span>
+            </div>
+          </div>
+        </div>
+      </div>
+    `;
     this.$chat_form.append(header_html);
   }
 
   setup_form() {
+    const brand = this.profile.brand || {};
+    const footer_text = brand.footer_text || '';
+    const footer_link = brand.footer_link || '';
     const form_html = `
-			<div class='chat-form-container'>
-				<p class='chat-query-heading'>${__('Share your queries or comments here.')}</p>
-				<form>
-					<div class='form-group'>
-						<label class='form-label'>${__('Full Name')}</label>
-						<input type='text' class='form-control' id='chat-fullname' 
-							placeholder='${__('Please enter your full name')}'>
-					</div>
-					<div class='form-group'>
-						<label class='form-label'>${__('Email Address')}</label>
-						<input type='email' class='form-control' id='chat-email' 
-							placeholder='${__('Please enter your email')}'>
-					</div>
-					<div class='form-group'>
-						<label class='form-label'>${__('Message')}</label>
-						<textarea class='form-control' id='chat-message-area' 
-							placeholder='${__('Please enter your message')}'></textarea>
-					</div>
-					<button type='button' class='btn btn-primary w-100'
-						id='submit-form'>
-            ${__('Submit')}
+      <div class='chat-form-container'>
+        <p class='chat-form-intro'>${__('Leave us a message and we\'ll get back to you.')}</p>
+        <form>
+          <div class='form-group'>
+            <input type='text' class='form-control chat-modern-input' id='chat-fullname'
+              placeholder='${__('Your name')}' required>
+          </div>
+          <div class='form-group'>
+            <input type='email' class='form-control chat-modern-input' id='chat-email'
+              placeholder='${__('Your email')}' required>
+          </div>
+          <div class='form-group'>
+            <input type='tel' class='form-control chat-modern-input' id='chat-phone'
+              placeholder='${__('Phone number (optional)')}'>
+          </div>
+          <div class='form-group form-group-grow'>
+            <textarea class='form-control chat-modern-input' id='chat-message-area'
+              placeholder='${__('How can we help?')}' rows='3'></textarea>
+          </div>
+          <button type='button' class='btn btn-primary btn-lg w-100'
+            id='submit-form'>
+            ${__('Send Message')}
           </button>
-				</form>
-			</div>
-		`;
-    const footer_html = `
-      <a class='chat-footer' target='_blank' href='https://frappeframework.com/'>
-        ${__('⚡ Powered by Frappe')}
-      </a>
+        </form>
+      </div>
     `;
+    const footer_html = footer_text
+      ? `<div class='chat-form-footer'><a class='chat-welcome-footer-link' target='_blank' href='${footer_link}'>${__(footer_text)}</a></div>`
+      : '';
     this.$chat_form.append(form_html + footer_html);
   }
 
@@ -71,6 +86,7 @@ export default class ChatForm {
     const result = {
       email: $('#chat-email').val(),
       full_name: $('#chat-fullname').val(),
+      phone: $('#chat-phone').val(),
       message: $('#chat-message-area').val(),
     };
     return result;
@@ -100,6 +116,8 @@ export default class ChatForm {
         user_email: res.email,
         message: query_message,
         room_type: res.room_type,
+        brand: this.profile.brand || {},
+        chat_status: this.profile.chat_status,
       };
 
       const chat_space = new ChatSpace({

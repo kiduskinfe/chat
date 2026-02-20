@@ -1,6 +1,7 @@
 import frappe
 from frappe import _
 from chat.utils import update_room, is_user_allowed_in_room, raise_not_authorized_error
+from chat.ai import handle_ai_response
 
 
 @frappe.whitelist(allow_guest=True)
@@ -23,6 +24,7 @@ def send(content: str, user: str, room: str, email: str):
             "sender": user,
             "room": room,
             "sender_email": email,
+            "is_ai": 0,
         }
     ).insert(ignore_permissions=True)
 
@@ -34,6 +36,9 @@ def send(content: str, user: str, room: str, email: str):
         "creation": new_message.creation,
         "room": room,
         "sender_email": email,
+        "is_ai": new_message.is_ai,
+        "ai_mode": new_message.ai_mode,
+        "is_ai_draft": new_message.is_ai_draft,
     }
     typing_data = {
         "room": room,
@@ -55,6 +60,29 @@ def send(content: str, user: str, room: str, email: str):
             after_commit=True,
         )
 
+    if user == "Guest" or frappe.session.user == "Guest":
+        frappe.db.set_value("Chat Room", room, "status", "Open", update_modified=False)
+        frappe.publish_realtime(
+            event="chat_inbox_message",
+            message={
+                "channel": "chat",
+                "conversation_id": room,
+                "sender_name": user,
+                "message_text": content,
+                "is_ai_draft": 0,
+            },
+            after_commit=True,
+        )
+
+    if user == "Guest" or frappe.session.user == "Guest":
+        frappe.enqueue(
+            "chat.ai.handle_ai_response",
+            room=room,
+            message=content,
+            is_guest_message=True,
+            queue="default",
+        )
+
 
 @frappe.whitelist(allow_guest=True)
 def get_all(room: str, email: str):
@@ -67,12 +95,24 @@ def get_all(room: str, email: str):
     if not is_user_allowed_in_room(room, email):
         raise_not_authorized_error()
 
+    filters = {
+        "room": room,
+    }
+    if frappe.session.user == "Guest":
+        filters["is_ai_draft"] = 0
+
     return frappe.get_all(
         "Chat Message",
-        filters={
-            "room": room,
-        },
-        fields=["content", "sender", "creation", "sender_email"],
+        filters=filters,
+        fields=[
+            "content",
+            "sender",
+            "creation",
+            "sender_email",
+            "is_ai",
+            "ai_mode",
+            "is_ai_draft",
+        ],
         order_by="creation asc",
     )
 

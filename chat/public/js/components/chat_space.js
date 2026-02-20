@@ -112,7 +112,8 @@ export default class ChatSpace {
         element.content,
         get_time(element.creation),
         message_type,
-        element.sender
+        element.sender,
+        element
       ).prop('outerHTML');
 
       this.prevMessage = element;
@@ -318,7 +319,7 @@ export default class ChatSpace {
     }
   }
 
-  make_message(content, time, type, name) {
+  make_message(content, time, type, name, meta = {}) {
     const message_class =
       type === 'recipient' ? 'recipient-message' : 'sender-message';
     const $recipient_element = $(document.createElement('div')).addClass(
@@ -327,6 +328,10 @@ export default class ChatSpace {
     const $message_element = $(document.createElement('div')).addClass(
       'message-bubble'
     );
+
+    if (meta && meta.is_ai_draft) {
+      $message_element.addClass('ai-draft');
+    }
 
     const $name_element = $(document.createElement('div'))
       .addClass('message-name')
@@ -362,6 +367,13 @@ export default class ChatSpace {
     if (type === 'sender' && this.profile.room_type === 'Group') {
       $message_element.append($name_element);
     }
+    if (meta && meta.is_ai_draft) {
+      const $badge = $(document.createElement('div'))
+        .addClass('ai-draft-badge')
+        .text(__('AI Draft'));
+      $message_element.append($badge);
+    }
+
     $message_element.append($sanitized_content);
     $recipient_element.append($message_element);
     $recipient_element.append(`<div class='message-time'>${__(time)}</div>`);
@@ -413,6 +425,10 @@ export default class ChatSpace {
       return;
     }
 
+    if (res.is_ai_draft && !this.profile.is_admin) {
+      return;
+    }
+
     if (
       this.profile.is_admin === true &&
       $('.chat-element').is(':visible') &&
@@ -428,7 +444,7 @@ export default class ChatSpace {
     }
 
     this.$chat_space_container.append(
-      this.make_message(res.content, time, chat_type, res.user)
+      this.make_message(res.content, time, chat_type, res.user, res)
     );
     scroll_to_bottom(this.$chat_space_container);
   }

@@ -75,17 +75,19 @@ def get_chat_settings():
     Returns:
         dict: Dictionary containing chat settings.
     """
-    chat_settings = frappe.get_cached_doc('Chat Settings')
+    chat_settings = frappe.get_cached_doc("Chat Settings")
     user_roles = frappe.get_roles()
 
     allowed_roles = [u.role for u in chat_settings.allowed_roles]
-    allowed_roles.extend(['System Manager', 'Administrator'])
+    allowed_roles.extend(["System Manager", "Administrator"])
     result = {
-        'enable_chat': False
+        "enable_chat": False,
+        "brand": _get_branding_settings(chat_settings),
+        "ai": _get_ai_settings(chat_settings),
     }
 
-    if frappe.session.user == 'Guest':
-        result['enable_chat'] = True
+    if frappe.session.user == "Guest":
+        result["enable_chat"] = True
 
     if not chat_settings.enable_chat or not has_common(allowed_roles, user_roles):
         return result
@@ -97,14 +99,54 @@ def get_chat_settings():
         end_time = datetime.time.fromisoformat(chat_settings.end_time)
         current_time = datetime.datetime.now().time()
 
-        chat_status = 'Online' if time_in_range(
-            start_time, end_time, current_time) else 'Offline'
+        chat_status = "Online" if time_in_range(
+            start_time, end_time, current_time) else "Offline"
     else:
-        chat_status = 'Online'
+        chat_status = "Online"
 
-    result['enable_chat'] = True
-    result['chat_status'] = chat_status
+    result["enable_chat"] = True
+    result["chat_status"] = chat_status
     return result
+
+
+def _get_branding_settings(chat_settings):
+    website = frappe.db.get_value(
+        "Website Settings",
+        None,
+        ["brand_logo", "app_name"],
+        as_dict=True,
+    ) or {}
+
+    brand_name = chat_settings.brand_name or website.get("app_name") or "Chat"
+    brand_logo = chat_settings.brand_logo or website.get("brand_logo")
+
+    return {
+        "name": brand_name,
+        "logo": brand_logo,
+        "primary_color": chat_settings.primary_color,
+        "button_color": chat_settings.button_color or "",
+        "welcome_title": chat_settings.welcome_title or "",
+        "welcome_subtitle": chat_settings.welcome_subtitle or "",
+        "online_status_text": chat_settings.online_status_text or "",
+        "offline_status_text": chat_settings.offline_status_text or "",
+        "cta_label": chat_settings.cta_label or "Start Conversation",
+        "bubble_label": chat_settings.bubble_label or "",
+        "bubble_style": chat_settings.bubble_style or "Icon + Label",
+        "bubble_icon": chat_settings.bubble_icon or "Chat",
+        "footer_text": chat_settings.footer_text or "",
+        "footer_link": chat_settings.footer_link or "",
+    }
+
+
+def _get_ai_settings(chat_settings):
+    return {
+        "enabled": 1 if chat_settings.enable_ai else 0,
+        "auto_reply_guest": 1 if chat_settings.auto_reply_guest else 0,
+        "draft_for_agents": 1 if chat_settings.draft_for_agents else 0,
+        "sender_user": chat_settings.ai_sender_user,
+        "history_limit": chat_settings.ai_history_limit or 6,
+        "system_prompt": chat_settings.ai_system_prompt or "",
+    }
 
 
 def display_warning():

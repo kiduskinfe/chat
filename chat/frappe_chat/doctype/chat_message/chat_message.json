@@ -8,7 +8,10 @@
   "sender",
   "sender_email",
   "room",
-  "content"
+  "content",
+  "is_ai",
+  "ai_mode",
+  "is_ai_draft"
  ],
  "fields": [
   {
@@ -39,6 +42,24 @@
    "in_list_view": 1,
    "label": "Content",
    "reqd": 1
+    },
+    {
+     "default": "0",
+     "fieldname": "is_ai",
+     "fieldtype": "Check",
+     "label": "Is AI"
+    },
+    {
+     "fieldname": "ai_mode",
+     "fieldtype": "Select",
+     "label": "AI Mode",
+     "options": "\nAuto Reply\nDraft"
+    },
+    {
+     "default": "0",
+     "fieldname": "is_ai_draft",
+     "fieldtype": "Check",
+     "label": "Is AI Draft"
   }
  ],
  "index_web_pages_for_search": 1,

@@ -20,6 +20,9 @@ def settings(token):
     }
 
     config = {**config, **get_chat_settings()}
+    brand = config.get("brand") or {}
+    if brand.get("name"):
+        config["guest_title"] = brand.get("name")
 
     if config['is_admin']:
         config['user'] = get_admin_name(config['user_email'])

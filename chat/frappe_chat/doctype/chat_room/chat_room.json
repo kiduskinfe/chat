@@ -8,11 +8,17 @@
  "field_order": [
   "room_name",
   "type",
-  "members",
-  "last_message",
-  "is_read",
-  "guest",
-  "users"
+    "members",
+    "last_message",
+    "is_read",
+    "guest",
+    "status",
+    "assigned_agent",
+    "customer",
+    "lead",
+    "contact",
+    "opportunity",
+    "users"
  ],
  "fields": [
   {
@@ -54,6 +60,43 @@
    "label": "Type",
    "options": "Group\nGuest\nDirect"
   },
+    {
+     "default": "Open",
+     "fieldname": "status",
+     "fieldtype": "Select",
+     "label": "Status",
+     "options": "Open\nAssigned\nResolved\nClosed"
+    },
+    {
+     "fieldname": "assigned_agent",
+     "fieldtype": "Link",
+     "label": "Assigned Agent",
+     "options": "User"
+    },
+    {
+     "fieldname": "customer",
+     "fieldtype": "Link",
+     "label": "Customer",
+     "options": "Customer"
+    },
+    {
+     "fieldname": "lead",
+     "fieldtype": "Link",
+     "label": "Lead",
+     "options": "Lead"
+    },
+    {
+     "fieldname": "contact",
+     "fieldtype": "Link",
+     "label": "Contact",
+     "options": "Contact"
+    },
+    {
+     "fieldname": "opportunity",
+     "fieldtype": "Link",
+     "label": "Opportunity",
+     "options": "Opportunity"
+    },
   {
    "fieldname": "users",
    "fieldtype": "Table MultiSelect",

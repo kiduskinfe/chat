@@ -18,15 +18,16 @@ def validate_room_kwargs(function):
     return _validator
 
 
-def generate_guest_room(email: str, full_name: str, message: str) -> Tuple[str, str]:
+def generate_guest_room(email: str, full_name: str, message: str, phone: str = "") -> Tuple[str, str]:
     chat_operators = frappe.get_cached_doc("Chat Settings").chat_operators or []
-    profile_doc = frappe.get_doc(
-        {
-            "doctype": "Chat Profile",
-            "email": email,
-            "guest_name": full_name,
-        }
-    ).insert(ignore_permissions=True)
+    profile_data = {
+        "doctype": "Chat Profile",
+        "email": email,
+        "guest_name": full_name,
+    }
+    if phone:
+        profile_data["phone"] = phone
+    profile_doc = frappe.get_doc(profile_data).insert(ignore_permissions=True)
     new_room = frappe.get_doc(
         {
             "doctype": "Chat Room",
@@ -61,20 +62,24 @@ def generate_guest_room(email: str, full_name: str, message: str) -> Tuple[str, 
 
 @frappe.whitelist(allow_guest=True)
 @validate_room_kwargs
-def get_guest_room(*, email: str, full_name: str, message: str) -> Dict[str, str]:
+def get_guest_room(*, email: str, full_name: str, message: str, phone: str = "") -> Dict[str, str]:
     """Validate and setup profile & room for the guest user
 
     Args:
         email (str): Email of guest.
         full_name (str): Full name of guest.
         message (str): Message to be dropped.
+        phone (str, optional): Phone number of guest.
     """
     if not frappe.db.exists("Chat Profile", email):
-        room, token = generate_guest_room(email, full_name, message)
+        room, token = generate_guest_room(email, full_name, message, phone=phone)
 
     else:
         room = frappe.db.get_value("Chat Room", {"guest": email}, "name")
         token = frappe.db.get_value("Chat Profile", email, "token")
+        # Update phone if provided and profile exists
+        if phone:
+            frappe.db.set_value("Chat Profile", email, "phone", phone)
 
     return {
         "guest_name": "Guest",

@@ -32,8 +32,8 @@ frappe.Chat = class {
       .hide();
 
     this.$chat_element.append(`
-			<span class="chat-cross-button">
-				${frappe.utils.icon('close', 'lg')}
+			<span class="chat-close-btn" title="${__('Close')}">
+				<svg xmlns="http://www.w3.org/2000/svg" width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
 			</span>
 		`);
     this.$chat_element.append(this.$chat_container);
@@ -65,20 +65,28 @@ frappe.Chat = class {
       const res = await get_settings(token);
       this.is_admin = res.is_admin;
       this.is_desk = 'desk' in frappe;
+      this.brand = res.brand || {};
 
-      if (res.enable_chat === false || (!this.is_desk && this.is_admin)) {
+      if (res.enable_chat === false) {
         return;
       }
 
       this.create_app();
+      if (this.brand.primary_color) {
+        this.$app_element.css('--primary-color', this.brand.primary_color);
+      }
+      if (this.brand.button_color || this.brand.primary_color) {
+        this.$app_element.css('--chat-btn-color', this.brand.button_color || this.brand.primary_color);
+      }
       await frappe.socketio.init(res.socketio_port);
 
       frappe.Chat.settings = {};
       frappe.Chat.settings.user = res.user_settings;
       frappe.Chat.settings.unread_count = 0;
+      frappe.Chat.settings.brand = this.brand;
 
-      if (res.is_admin) {
-        // If the user is admin, render everthing
+      if (res.is_admin && this.is_desk) {
+        // If the user is admin on desk, render the full chat list
         this.chat_list = new ChatList({
           $wrapper: this.$chat_container,
           user: res.user,
@@ -96,6 +104,7 @@ frappe.Chat = class {
             is_admin: res.is_admin,
             user: res.user,
             user_email: res.user_email,
+            brand: this.brand,
           },
         });
       } else {
@@ -106,6 +115,7 @@ frappe.Chat = class {
             name: res.guest_title,
             is_admin: res.is_admin,
             chat_status: res.chat_status,
+            brand: this.brand,
           },
         });
         this.chat_welcome.render();
@@ -147,6 +157,10 @@ frappe.Chat = class {
   setup_events() {
     const me = this;
     $('.chat-navbar-icon').on('click', function () {
+      me.chat_bubble.change_bubble();
+    });
+
+    $('.chat-close-btn').on('click', function () {
       me.chat_bubble.change_bubble();
     });
 

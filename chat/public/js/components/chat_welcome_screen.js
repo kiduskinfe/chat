@@ -12,46 +12,47 @@ export default class ChatWelcome {
       'chat-welcome'
     );
 
-    const welcome_html = `
-			<div class='chat-welcome-header'>
-					<span class='hero-icon'>
-						<svg xmlns="http://www.w3.org/2000/svg" width="1.4rem" height="1.4rem" viewBox="0 0 24 24">
-						<path d="M12 1c-6.627 0-12 4.364-12 9.749 0 3.131 1.817 5.917 4.64 7.7.868 2.167-1.083 4.008-3.142 4.503 2.271.195 6.311-.121 9.374-2.498 7.095.538 13.128-3.997 13.128-9.705 0-5.385-5.373-9.749-12-9.749z"/>
-						</svg>
-					</span>
-					<h3>${__('Hi there ! 🙌🏼')}</h3>
-					<p>
-						${__('We make it simple to connect with us.')}
-						${__('Ask us anything, or share your feedback.')}
-					</p>
-			</div>
-		`;
+    const brand = this.profile.brand || {};
+    const welcome_title = brand.welcome_title || '';
+    const welcome_subtitle = brand.welcome_subtitle || '';
+    const footer_text = brand.footer_text || '';
+    const footer_link = brand.footer_link || '';
+    const cta_label = brand.cta_label || __('Start Conversation');
+    const is_online = this.profile.chat_status === 'Online';
+    const status_text = is_online
+      ? (brand.online_status_text || __('We are online'))
+      : (brand.offline_status_text || __('We are offline'));
+    const status_class = is_online ? 'online' : 'offline';
 
-    const status_text =
-      this.profile.chat_status === 'Online'
-        ? __('We are online')
-        : __('We are offline');
+    const logo_html = brand.logo
+      ? `<img class='chat-brand-logo' src='${brand.logo}' alt='${brand.name || ''}'>`
+      : `<div class='chat-brand-icon'>
+          <svg xmlns="http://www.w3.org/2000/svg" width="1.6rem" height="1.6rem" viewBox="0 0 24 24">
+            <path d="M12 1c-6.627 0-12 4.364-12 9.749 0 3.131 1.817 5.917 4.64 7.7.868 2.167-1.083 4.008-3.142 4.503 2.271.195 6.311-.121 9.374-2.498 7.095.538 13.128-3.997 13.128-9.705 0-5.385-5.373-9.749-12-9.749z"/>
+          </svg>
+        </div>`;
 
-    const reason_text =
-      this.profile.chat_status === 'Online'
-        ? __('Typically replies in a few hours')
-        : __('Just drop a message and we will get back to you soon');
+    const html = `
+      <div class='chat-welcome-hero'>
+        <div class='chat-welcome-logo'>
+          ${logo_html}
+        </div>
+        ${welcome_title ? `<h3 class='chat-welcome-title'>${__(welcome_title)}</h3>` : ''}
+        ${welcome_subtitle ? `<p class='chat-welcome-subtitle'>${__(welcome_subtitle)}</p>` : ''}
+      </div>
+      <div class='chat-welcome-actions'>
+        <div class='chat-status-badge ${status_class}'>
+          <span class='status-dot'></span>
+          <span>${__(status_text)}</span>
+        </div>
+        <button type='button' class='btn btn-primary btn-lg w-100' id='start-conversation'>
+          ${__(cta_label)}
+        </button>
+        ${footer_text ? `<a class='chat-welcome-footer-link' target='_blank' href='${footer_link}'>${__(footer_text)}</a>` : ''}
+      </div>
+    `;
 
-    const bottom_html = `
-			<div class='chat-welcome-footer'>
-				<p class='status-content'>${status_text}</p>
-				<p class='hero-content'>${reason_text}</p>
-				<button type='button' class='btn btn-primary w-100'
-					id='start-conversation'>
-					${__('Start Conversation')}
-				</button>
-				<a class='chat-footer welcome-footer' target='_blank' href='https://frappeframework.com/'>
-					${__('⚡ Powered by Frappe')}
-				</a>
-			</div>
-		`;
-
-    this.$chat_welcome_screen.append(welcome_html + bottom_html);
+    this.$chat_welcome_screen.html(html);
   }
 
   setup_events() {
