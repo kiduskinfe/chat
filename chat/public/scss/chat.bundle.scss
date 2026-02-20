@@ -529,9 +529,45 @@ $height: 582px;
   flex-direction: column;
   height: 100%;
   position: relative;
+  overflow: hidden;
+
+  // Tilted corner ribbon — 24/7 badge
+  .chat-247-ribbon {
+    position: absolute;
+    top: 18px;
+    right: -34px;
+    background: linear-gradient(135deg, #28a745, #20c040);
+    color: #fff;
+    font-size: 11px;
+    font-weight: 800;
+    padding: 5px 46px;
+    transform: rotate(45deg);
+    z-index: 10;
+    text-align: center;
+    letter-spacing: 0.4px;
+    white-space: nowrap;
+    box-shadow: 0 2px 8px rgba(40, 167, 69, 0.35);
+    text-transform: uppercase;
+
+    .chat-247-pulse {
+      width: 6px;
+      height: 6px;
+      border-radius: 50%;
+      background: #fff;
+      display: inline-block;
+      animation: pulse247 2s infinite;
+      vertical-align: middle;
+      margin-right: 2px;
+    }
+  }
+
+  @keyframes pulse247 {
+    0%, 100% { opacity: 1; transform: scale(1); }
+    50% { opacity: 0.4; transform: scale(0.85); }
+  }
 
   .chat-welcome-hero {
-    padding: 36px 24px 20px;
+    padding: 34px 24px 18px;
     text-align: center;
     flex-shrink: 0;
 
@@ -575,49 +611,14 @@ $height: 582px;
     }
   }
 
-  // 24/7 badge — prominent, centered below logo
-  .chat-247-badge {
-    display: inline-flex;
-    align-items: center;
-    gap: 7px;
-    background: rgba(40, 167, 69, 0.1);
-    color: #1e7e34;
-    font-size: 13px;
-    font-weight: 800;
-    padding: 6px 18px;
-    border-radius: 20px;
-    letter-spacing: 0.4px;
-    white-space: nowrap;
-    margin-bottom: 14px;
-
-    strong {
-      font-weight: 800;
-    }
-
-    .chat-247-pulse {
-      width: 9px;
-      height: 9px;
-      border-radius: 50%;
-      background: #28a745;
-      display: inline-block;
-      animation: pulse247 2s infinite;
-    }
-  }
-
-  @keyframes pulse247 {
-    0%, 100% { opacity: 1; transform: scale(1); }
-    50% { opacity: 0.4; transform: scale(0.85); }
-  }
-
   .chat-welcome-actions {
-    padding: 16px 24px 20px;
+    padding: 14px 24px 16px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 14px;
+    gap: 12px;
     border-top: 1px solid var(--border-color);
     background: var(--bg-color);
-    flex: 1;
 
     button {
       border-radius: 10px;
@@ -632,8 +633,9 @@ $height: 582px;
     }
   }
 
-  // Footer pinned to bottom with separator
+  // Footer pinned to very bottom
   .chat-welcome-footer {
+    margin-top: auto;
     padding: 10px 24px 14px;
     text-align: center;
     border-top: 1px solid var(--border-color);
