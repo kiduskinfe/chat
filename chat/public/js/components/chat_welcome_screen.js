@@ -90,6 +90,11 @@ export default class ChatWelcome {
     const footer_text = brand.footer_text || '';
     const footer_link = brand.footer_link || '';
     const cta_label = brand.cta_label || __('Start Conversation');
+    const is_online = this.profile.chat_status === 'Online';
+    const status_text = is_online
+      ? (brand.online_status_text || __('We are online'))
+      : (brand.offline_status_text || __('We are offline'));
+    const status_class = is_online ? 'online' : 'offline';
 
     // 24/7 badge
     const show_badge = brand.show_24_7_badge;
@@ -139,15 +144,19 @@ export default class ChatWelcome {
     }
 
     const html = `
-      ${show_badge ? `<div class='chat-247-ribbon'><span class='chat-247-pulse'></span>${__(badge_text)} ${__('Support')}</div>` : ''}
       <div class='chat-welcome-hero'>
         <div class='chat-welcome-logo'>
           ${logo_html}
         </div>
+        ${show_badge ? `<div class='chat-247-badge'><span class='chat-247-pulse'></span><strong>${__(badge_text)} ${__('Support')}</strong></div>` : ''}
         ${welcome_title ? `<h3 class='chat-welcome-title'>${__(welcome_title)}</h3>` : ''}
         ${welcome_subtitle ? `<p class='chat-welcome-subtitle'>${__(welcome_subtitle)}</p>` : ''}
       </div>
       <div class='chat-welcome-actions'>
+        <div class='chat-status-badge ${status_class}'>
+          <span class='status-dot'></span>
+          <span>${__(status_text)}</span>
+        </div>
         <button type='button' class='btn btn-primary btn-lg w-100' id='start-conversation'>
           ${__(cta_label)}
         </button>
@@ -156,8 +165,8 @@ export default class ChatWelcome {
           <div class='chat-reach-icons'>${icons_html}</div>
         ` : ''}
         ${contact_card_html}
-        ${footer_text ? `<a class='chat-welcome-footer-link' target='_blank' href='${footer_link}'>${__(footer_text)}</a>` : ''}
       </div>
+      ${footer_text ? `<div class='chat-welcome-footer'><a class='chat-welcome-footer-link' target='_blank' href='${footer_link}'>${__(footer_text)}</a></div>` : ''}
     `;
 
     this.$chat_welcome_screen.html(html);

@@ -529,29 +529,74 @@ $height: 582px;
   flex-direction: column;
   height: 100%;
   position: relative;
-  overflow: hidden;
 
-  // 24/7 ribbon badge — top right corner
-  .chat-247-ribbon {
-    position: absolute;
-    top: 14px;
-    right: 48px; // leave room for X close button
+  .chat-welcome-hero {
+    padding: 36px 24px 20px;
+    text-align: center;
+    flex-shrink: 0;
+
+    .chat-welcome-logo {
+      margin-bottom: 14px;
+
+      img.chat-hero-logo {
+        height: auto;
+        width: auto;
+        max-width: 170px;
+        max-height: 80px;
+        object-fit: contain;
+      }
+
+      .chat-brand-icon {
+        width: 60px;
+        height: 60px;
+        border-radius: 16px;
+        background: var(--primary-color);
+        display: inline-flex;
+        align-items: center;
+        justify-content: center;
+        svg { fill: var(--white); width: 28px; height: 28px; }
+      }
+    }
+
+    .chat-welcome-title {
+      font-size: $font-size-xl;
+      font-weight: 700;
+      color: var(--text-color);
+      margin-bottom: 6px;
+      line-height: 1.3;
+    }
+
+    .chat-welcome-subtitle {
+      font-size: $font-size-sm;
+      color: var(--text-muted);
+      line-height: 1.5;
+      max-width: 290px;
+      margin: 0 auto;
+    }
+  }
+
+  // 24/7 badge — prominent, centered below logo
+  .chat-247-badge {
     display: inline-flex;
     align-items: center;
-    gap: 5px;
-    background: rgba(40, 167, 69, 0.12);
+    gap: 7px;
+    background: rgba(40, 167, 69, 0.1);
     color: #1e7e34;
-    font-size: 11px;
-    font-weight: 700;
-    padding: 4px 12px;
+    font-size: 13px;
+    font-weight: 800;
+    padding: 6px 18px;
     border-radius: 20px;
-    letter-spacing: 0.3px;
+    letter-spacing: 0.4px;
     white-space: nowrap;
-    z-index: 5;
+    margin-bottom: 14px;
+
+    strong {
+      font-weight: 800;
+    }
 
     .chat-247-pulse {
-      width: 7px;
-      height: 7px;
+      width: 9px;
+      height: 9px;
       border-radius: 50%;
       background: #28a745;
       display: inline-block;
@@ -564,67 +609,21 @@ $height: 582px;
     50% { opacity: 0.4; transform: scale(0.85); }
   }
 
-  .chat-welcome-hero {
-    padding: 32px 24px 12px;
-    text-align: center;
-    flex-shrink: 0;
-
-    .chat-welcome-logo {
-      margin-bottom: 10px;
-
-      img.chat-hero-logo {
-        height: auto;
-        width: auto;
-        max-width: 160px;
-        max-height: 72px;
-        object-fit: contain;
-      }
-
-      .chat-brand-icon {
-        width: 56px;
-        height: 56px;
-        border-radius: 14px;
-        background: var(--primary-color);
-        display: inline-flex;
-        align-items: center;
-        justify-content: center;
-        svg { fill: var(--white); width: 26px; height: 26px; }
-      }
-    }
-
-    .chat-welcome-title {
-      font-size: $font-size-lg;
-      font-weight: 700;
-      color: var(--text-color);
-      margin-bottom: 4px;
-      line-height: 1.3;
-    }
-
-    .chat-welcome-subtitle {
-      font-size: $font-size-sm;
-      color: var(--text-muted);
-      line-height: 1.4;
-      max-width: 280px;
-      margin: 0 auto;
-    }
-  }
-
   .chat-welcome-actions {
-    padding: 12px 24px 16px;
+    padding: 16px 24px 20px;
     display: flex;
     flex-direction: column;
     align-items: center;
-    gap: 10px;
+    gap: 14px;
     border-top: 1px solid var(--border-color);
     background: var(--bg-color);
-    border-radius: 0 0 16px 16px;
     flex: 1;
 
     button {
       border-radius: 10px;
       font-size: $font-size-base;
       font-weight: 600;
-      padding: 10px;
+      padding: 11px;
       transition: all 0.2s ease;
       &:hover {
         transform: translateY(-1px);
@@ -633,13 +632,23 @@ $height: 582px;
     }
   }
 
+  // Footer pinned to bottom with separator
+  .chat-welcome-footer {
+    padding: 10px 24px 14px;
+    text-align: center;
+    border-top: 1px solid var(--border-color);
+    background: var(--bg-color);
+    border-radius: 0 0 16px 16px;
+    flex-shrink: 0;
+  }
+
   // Divider
   .chat-channels-divider {
     width: 100%;
     display: flex;
     align-items: center;
     gap: 12px;
-    margin: 0;
+    margin: 2px 0;
 
     &::before, &::after {
       content: '';
@@ -657,17 +666,17 @@ $height: 582px;
     }
   }
 
-  // Unified icons row (channels + social merged, icons only)
+  // Unified icons row
   .chat-reach-icons {
     display: flex;
-    gap: 8px;
+    gap: 10px;
     justify-content: center;
     flex-wrap: wrap;
   }
 
   .chat-reach-icon {
-    width: 38px;
-    height: 38px;
+    width: 40px;
+    height: 40px;
     border-radius: 50%;
     background: var(--card-bg);
     border: 1.5px solid var(--border-color);
@@ -679,8 +688,8 @@ $height: 582px;
     transition: all 0.2s ease;
 
     svg {
-      width: 18px;
-      height: 18px;
+      width: 20px;
+      height: 20px;
     }
 
     &:hover {
@@ -689,7 +698,6 @@ $height: 582px;
       text-decoration: none;
     }
 
-    // Brand colors on hover
     &.icon-call {
       color: var(--primary-color);
       border-color: var(--primary-color);
@@ -733,7 +741,7 @@ $height: 582px;
     align-items: center;
     gap: 12px;
     width: 100%;
-    padding: 10px 12px;
+    padding: 10px 14px;
     background: var(--card-bg);
     border: 1px solid var(--border-color);
     border-radius: 12px;
@@ -749,8 +757,8 @@ $height: 582px;
     }
 
     .chat-contact-card-avatar {
-      width: 40px;
-      height: 40px;
+      width: 42px;
+      height: 42px;
       border-radius: 8px;
       background: var(--control-bg);
       overflow: hidden;
@@ -776,7 +784,7 @@ $height: 582px;
     .chat-contact-card-info {
       display: flex;
       flex-direction: column;
-      gap: 1px;
+      gap: 2px;
       flex: 1;
       min-width: 0;
 
