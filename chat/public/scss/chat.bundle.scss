@@ -534,13 +534,13 @@ $height: 582px;
   // Tilted corner ribbon — LEFT side, clean smooth edges
   .chat-247-ribbon {
     position: absolute;
-    top: 16px;
-    left: -34px;
+    top: 18px;
+    left: -38px;
     background: var(--primary-color, #E31E24);
     color: #fff;
     font-size: 16px;
     font-weight: 900;
-    padding: 6px 46px;
+    padding: 6px 54px;
     transform: rotate(-45deg);
     transform-origin: center;
     z-index: 10;
