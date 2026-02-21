@@ -5,6 +5,7 @@
  "editable_grid": 1,
  "engine": "InnoDB",
  "field_order": [
+  "general_section",
   "enable_chat",
   "start_time",
   "end_time",
@@ -20,20 +21,24 @@
   "welcome_subtitle",
   "online_status_text",
   "offline_status_text",
+  "cta_widget_section",
   "cta_label",
   "cta_button_effect",
-  "bubble_label",
+  "cta_widget_column",
   "bubble_style",
   "bubble_icon",
+  "bubble_label",
+  "appearance_section",
+  "show_24_7_badge",
+  "support_hours_text",
+  "appearance_column",
   "footer_text",
   "footer_link",
   "contact_channels_section",
-  "show_24_7_badge",
-  "support_hours_text",
+  "phone_number",
   "whatsapp_number",
   "telegram_link",
   "contact_channels_column",
-  "phone_number",
   "company_email",
   "company_address",
   "enable_save_contact",
@@ -55,24 +60,33 @@
  ],
  "fields": [
   {
+   "fieldname": "general_section",
+   "fieldtype": "Section Break",
+   "label": "General",
+   "description": "Core settings, operating hours, and operator assignments"
+  },
+  {
    "default": "1",
    "fieldname": "enable_chat",
    "fieldtype": "Check",
    "in_list_view": 1,
    "label": "Enable Chat",
-   "reqd": 1
+   "reqd": 1,
+   "description": "Toggle the entire chat widget on or off"
   },
   {
    "default": "00:00:00",
    "fieldname": "start_time",
    "fieldtype": "Time",
-   "label": "Start Time"
+   "label": "Start Time",
+   "description": "When operators are available (00:00 = always)"
   },
   {
    "default": "00:00:00",
    "fieldname": "end_time",
    "fieldtype": "Time",
-   "label": "End Time"
+   "label": "End Time",
+   "description": "When operators go offline (00:00 = always)"
   },
   {
    "default": "Administrator\nGuest\nSystem Manager",
@@ -85,252 +99,292 @@
    "fieldname": "chat_operators",
    "fieldtype": "Table MultiSelect",
    "label": "Chat Operators",
-   "options": "Chat Room User"
-    },
-    {
-     "fieldname": "branding_section",
-     "fieldtype": "Section Break",
-     "label": "Branding"
-    },
-    {
-     "fieldname": "brand_name",
-     "fieldtype": "Data",
-     "label": "Brand Name"
-    },
-    {
-     "fieldname": "brand_logo",
-     "fieldtype": "Attach Image",
-     "label": "Brand Logo"
-    },
-    {
-     "fieldname": "primary_color",
-     "fieldtype": "Color",
-     "label": "Primary Color",
-     "description": "Used for the chat bubble and message bubbles"
-    },
-    {
-     "fieldname": "button_color",
-     "fieldtype": "Color",
-     "label": "Button Color",
-     "description": "Used for CTA buttons (Start Chat, Send Message). Falls back to Primary Color if empty."
-    },
-    {
-     "fieldname": "branding_column",
-     "fieldtype": "Column Break"
-    },
-    {
-     "fieldname": "welcome_title",
-     "fieldtype": "Data",
-     "label": "Welcome Title"
-    },
-    {
-     "fieldname": "welcome_subtitle",
-     "fieldtype": "Small Text",
-     "label": "Welcome Subtitle"
-    },
-    {
-     "fieldname": "online_status_text",
-     "fieldtype": "Data",
-     "label": "Online Status Text"
-    },
-    {
-     "fieldname": "offline_status_text",
-     "fieldtype": "Data",
-     "label": "Offline Status Text"
-    },
-    {
-     "fieldname": "cta_label",
-     "fieldtype": "Data",
-     "label": "CTA Button Label"
-    },
-    {
-     "default": "Glow",
-     "fieldname": "cta_button_effect",
-     "fieldtype": "Select",
-     "label": "CTA Button Effect",
-     "options": "None\nGlow\nLevitate\nPulse\nBounce",
-     "description": "Visual effect on the main CTA button to attract clicks. Glow = pulsing shadow, Levitate = floating animation, Pulse = scale pulse, Bounce = gentle bounce"
-    },
-    {
-     "fieldname": "bubble_label",
-     "fieldtype": "Data",
-     "label": "Chat Bubble Label",
-     "description": "Text shown next to the icon (only when style is Icon + Label)"
-    },
-    {
-     "default": "Icon + Label",
-     "fieldname": "bubble_style",
-     "fieldtype": "Select",
-     "label": "Bubble Style",
-     "options": "Icon + Label\nIcon Only",
-     "description": "Icon Only shows a clean circle; Icon + Label shows a pill with text"
-    },
-    {
-     "default": "Chat",
-     "fieldname": "bubble_icon",
-     "fieldtype": "Select",
-     "label": "Bubble Icon",
-     "options": "Chat\nAI\nHeadset",
-     "description": "Choose the icon displayed on the chat bubble"
-    },
-    {
-     "fieldname": "footer_text",
-     "fieldtype": "Data",
-     "label": "Footer Text"
-    },
-    {
-     "fieldname": "footer_link",
-     "fieldtype": "Data",
-     "label": "Footer Link"
-    },
-    {
-     "fieldname": "contact_channels_section",
-     "fieldtype": "Section Break",
-     "label": "Contact Channels"
-    },
-    {
-     "default": "1",
-     "fieldname": "show_24_7_badge",
-     "fieldtype": "Check",
-     "label": "Show 24/7 Badge",
-     "description": "Display a 24/7 support badge in the chat header"
-    },
-    {
-     "default": "24/7",
-     "fieldname": "support_hours_text",
-     "fieldtype": "Data",
-     "label": "Support Hours Text",
-     "description": "Text shown in the badge (e.g. 24/7, Mon-Fri, etc.)",
-     "depends_on": "show_24_7_badge"
-    },
-    {
-     "fieldname": "whatsapp_number",
-     "fieldtype": "Data",
-     "label": "WhatsApp Number",
-     "description": "International format e.g. +251978077878"
-    },
-    {
-     "fieldname": "telegram_link",
-     "fieldtype": "Data",
-     "label": "Telegram Link",
-     "description": "e.g. https://t.me/addisfly or https://t.me/+251978077878"
-    },
-    {
-     "fieldname": "contact_channels_column",
-     "fieldtype": "Column Break"
-    },
-    {
-     "fieldname": "phone_number",
-     "fieldtype": "Data",
-     "label": "Phone Number",
-     "description": "Direct call number e.g. +251978077878"
-    },
-    {
-     "fieldname": "company_email",
-     "fieldtype": "Data",
-     "label": "Company Email",
-     "options": "Email"
-    },
-    {
-     "fieldname": "company_address",
-     "fieldtype": "Small Text",
-     "label": "Company Address",
-     "description": "Used in saved contact vCard"
-    },
-    {
-     "default": "1",
-     "fieldname": "enable_save_contact",
-     "fieldtype": "Check",
-     "label": "Enable Save Contact",
-     "description": "Show a Save Contact button that downloads a vCard"
-    },
-    {
-     "fieldname": "social_links_section",
-     "fieldtype": "Section Break",
-     "label": "Social Links"
-    },
-    {
-     "fieldname": "instagram_url",
-     "fieldtype": "Data",
-     "label": "Instagram URL"
-    },
-    {
-     "fieldname": "tiktok_url",
-     "fieldtype": "Data",
-     "label": "TikTok URL"
-    },
-    {
-     "fieldname": "linkedin_url",
-     "fieldtype": "Data",
-     "label": "LinkedIn URL"
-    },
-    {
-     "fieldname": "social_links_column",
-     "fieldtype": "Column Break"
-    },
-    {
-     "fieldname": "facebook_url",
-     "fieldtype": "Data",
-     "label": "Facebook URL"
-    },
-    {
-     "fieldname": "telegram_channel_url",
-     "fieldtype": "Data",
-     "label": "Telegram Channel URL",
-     "description": "Content/news channel (separate from support Telegram)"
-    },
-    {
-     "default": "call,telegram,whatsapp,instagram,tiktok,linkedin,facebook,telegram_channel",
-     "description": "Comma-separated order of icons shown on the welcome screen. Available keys: call, telegram, whatsapp, instagram, tiktok, linkedin, facebook, telegram_channel",
-     "fieldname": "channel_icons_order",
-     "fieldtype": "Small Text",
-     "label": "Channel Icons Order"
-    },
-    {
-     "fieldname": "ai_section",
-     "fieldtype": "Section Break",
-     "label": "AI"
-    },
-    {
-     "default": "0",
-     "fieldname": "enable_ai",
-     "fieldtype": "Check",
-     "label": "Enable AI"
-    },
-    {
-     "default": "1",
-     "fieldname": "auto_reply_guest",
-     "fieldtype": "Check",
-     "label": "Auto Reply to Guests"
-    },
-    {
-     "default": "1",
-     "fieldname": "draft_for_agents",
-     "fieldtype": "Check",
-     "label": "Create Draft for Agents"
-    },
-    {
-     "fieldname": "ai_sender_user",
-     "fieldtype": "Link",
-     "label": "AI Sender User",
-     "options": "User"
-    },
-    {
-     "default": "6",
-     "fieldname": "ai_history_limit",
-     "fieldtype": "Int",
-     "label": "AI History Limit"
-    },
-    {
-     "fieldname": "ai_system_prompt",
-     "fieldtype": "Text",
-     "label": "AI System Prompt"
+   "options": "Chat Room User",
+   "description": "Users who can respond to incoming chats"
+  },
+  {
+   "fieldname": "branding_section",
+   "fieldtype": "Section Break",
+   "label": "Branding",
+   "description": "Brand identity and welcome screen text"
+  },
+  {
+   "fieldname": "brand_name",
+   "fieldtype": "Data",
+   "label": "Brand Name",
+   "description": "Company or product name shown in the widget"
+  },
+  {
+   "fieldname": "brand_logo",
+   "fieldtype": "Attach Image",
+   "label": "Brand Logo",
+   "description": "Logo displayed at the top of the welcome screen"
+  },
+  {
+   "fieldname": "primary_color",
+   "fieldtype": "Color",
+   "label": "Primary Color",
+   "description": "Chat bubble, message bubbles, and accent elements"
+  },
+  {
+   "fieldname": "button_color",
+   "fieldtype": "Color",
+   "label": "Button Color",
+   "description": "Used for CTA buttons (Start Chat, Send Message). Falls back to Primary Color if empty."
+  },
+  {
+   "fieldname": "branding_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "welcome_title",
+   "fieldtype": "Data",
+   "label": "Welcome Title",
+   "description": "Main heading on the welcome screen"
+  },
+  {
+   "fieldname": "welcome_subtitle",
+   "fieldtype": "Small Text",
+   "label": "Welcome Subtitle",
+   "description": "Secondary text below the title"
+  },
+  {
+   "fieldname": "online_status_text",
+   "fieldtype": "Data",
+   "label": "Online Status Text",
+   "description": "Shown when chat is within operating hours"
+  },
+  {
+   "fieldname": "offline_status_text",
+   "fieldtype": "Data",
+   "label": "Offline Status Text",
+   "description": "Shown when chat is outside operating hours"
+  },
+  {
+   "fieldname": "cta_widget_section",
+   "fieldtype": "Section Break",
+   "label": "CTA & Widget",
+   "description": "Configure the main call-to-action button and the floating chat bubble"
+  },
+  {
+   "fieldname": "cta_label",
+   "fieldtype": "Data",
+   "label": "CTA Button Label",
+   "description": "Text on the main action button (e.g. Chat with us Here)"
+  },
+  {
+   "default": "Glow",
+   "fieldname": "cta_button_effect",
+   "fieldtype": "Select",
+   "label": "CTA Button Effect",
+   "options": "None\nGlow\nLevitate\nPulse\nBounce",
+   "description": "Glow = pulsing shadow, Levitate = floating motion, Pulse = scale breathing, Bounce = gentle bounce"
+  },
+  {
+   "fieldname": "cta_widget_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "default": "Icon + Label",
+   "fieldname": "bubble_style",
+   "fieldtype": "Select",
+   "label": "Bubble Style",
+   "options": "Icon + Label\nIcon Only",
+   "description": "Icon Only = clean circle; Icon + Label = pill with text"
+  },
+  {
+   "default": "Chat",
+   "fieldname": "bubble_icon",
+   "fieldtype": "Select",
+   "label": "Bubble Icon",
+   "options": "Chat\nAI\nHeadset",
+   "description": "Icon displayed on the floating chat bubble"
+  },
+  {
+   "fieldname": "bubble_label",
+   "fieldtype": "Data",
+   "label": "Bubble Label",
+   "description": "Text next to the icon (visible only when Bubble Style is Icon + Label)"
+  },
+  {
+   "fieldname": "appearance_section",
+   "fieldtype": "Section Break",
+   "label": "Appearance",
+   "description": "Badge, footer, and other visual elements"
+  },
+  {
+   "default": "1",
+   "fieldname": "show_24_7_badge",
+   "fieldtype": "Check",
+   "label": "Show 24/7 Badge",
+   "description": "Display a diagonal ribbon badge on the welcome screen"
+  },
+  {
+   "default": "24/7",
+   "fieldname": "support_hours_text",
+   "fieldtype": "Data",
+   "label": "Badge Text",
+   "description": "Text shown in the ribbon (e.g. 24/7, Mon-Fri)",
+   "depends_on": "show_24_7_badge"
+  },
+  {
+   "fieldname": "appearance_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "footer_text",
+   "fieldtype": "Data",
+   "label": "Footer Text",
+   "description": "Shown at the bottom of the welcome screen"
+  },
+  {
+   "fieldname": "footer_link",
+   "fieldtype": "Data",
+   "label": "Footer Link",
+   "description": "URL the footer text links to"
+  },
+  {
+   "fieldname": "contact_channels_section",
+   "fieldtype": "Section Break",
+   "label": "Contact Channels",
+   "description": "Direct contact methods shown on the welcome screen"
+  },
+  {
+   "fieldname": "phone_number",
+   "fieldtype": "Data",
+   "label": "Phone Number",
+   "description": "Direct call number e.g. +251978077878"
+  },
+  {
+   "fieldname": "whatsapp_number",
+   "fieldtype": "Data",
+   "label": "WhatsApp Number",
+   "description": "International format e.g. +251978077878"
+  },
+  {
+   "fieldname": "telegram_link",
+   "fieldtype": "Data",
+   "label": "Telegram Link",
+   "description": "e.g. https://t.me/addisfly"
+  },
+  {
+   "fieldname": "contact_channels_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "company_email",
+   "fieldtype": "Data",
+   "label": "Company Email",
+   "options": "Email",
+   "description": "Included in the downloadable vCard"
+  },
+  {
+   "fieldname": "company_address",
+   "fieldtype": "Small Text",
+   "label": "Company Address",
+   "description": "Used in the downloadable vCard"
+  },
+  {
+   "default": "1",
+   "fieldname": "enable_save_contact",
+   "fieldtype": "Check",
+   "label": "Enable Save Contact",
+   "description": "Show a card that lets users download a vCard"
+  },
+  {
+   "fieldname": "social_links_section",
+   "fieldtype": "Section Break",
+   "label": "Social Links",
+   "description": "Social media profiles (shown as icons on the welcome screen)"
+  },
+  {
+   "fieldname": "instagram_url",
+   "fieldtype": "Data",
+   "label": "Instagram URL",
+   "description": "e.g. https://instagram.com/addisfly"
+  },
+  {
+   "fieldname": "tiktok_url",
+   "fieldtype": "Data",
+   "label": "TikTok URL",
+   "description": "e.g. https://tiktok.com/@addisfly"
+  },
+  {
+   "fieldname": "linkedin_url",
+   "fieldtype": "Data",
+   "label": "LinkedIn URL",
+   "description": "e.g. https://linkedin.com/company/addisfly"
+  },
+  {
+   "fieldname": "social_links_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "facebook_url",
+   "fieldtype": "Data",
+   "label": "Facebook URL",
+   "description": "e.g. https://facebook.com/addisfly"
+  },
+  {
+   "fieldname": "telegram_channel_url",
+   "fieldtype": "Data",
+   "label": "Telegram Channel URL",
+   "description": "Content/news channel (separate from support Telegram)"
+  },
+  {
+   "default": "call,telegram,whatsapp,instagram,tiktok,linkedin,facebook,telegram_channel",
+   "description": "Reserved for future use \u2014 comma-separated order of channel icons",
+   "fieldname": "channel_icons_order",
+   "fieldtype": "Small Text",
+   "hidden": 1,
+   "label": "Channel Icons Order"
+  },
+  {
+   "fieldname": "ai_section",
+   "fieldtype": "Section Break",
+   "label": "AI Assistant",
+   "description": "Configure the AI-powered auto-reply for guests and draft suggestions for agents"
+  },
+  {
+   "default": "0",
+   "fieldname": "enable_ai",
+   "fieldtype": "Check",
+   "label": "Enable AI"
+  },
+  {
+   "default": "1",
+   "fieldname": "auto_reply_guest",
+   "fieldtype": "Check",
+   "label": "Auto Reply to Guests"
+  },
+  {
+   "default": "1",
+   "fieldname": "draft_for_agents",
+   "fieldtype": "Check",
+   "label": "Create Draft for Agents"
+  },
+  {
+   "fieldname": "ai_sender_user",
+   "fieldtype": "Link",
+   "label": "AI Sender User",
+   "options": "User"
+  },
+  {
+   "default": "6",
+   "fieldname": "ai_history_limit",
+   "fieldtype": "Int",
+   "label": "AI History Limit"
+  },
+  {
+   "fieldname": "ai_system_prompt",
+   "fieldtype": "Text",
+   "label": "AI System Prompt"
   }
  ],
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2022-08-30 20:13:35.769719",
+ "modified": "2026-02-21 14:00:00.000000",
  "modified_by": "Administrator",
  "module": "Frappe Chat",
  "name": "Chat Settings",
