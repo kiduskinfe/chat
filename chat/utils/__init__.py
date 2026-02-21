@@ -144,6 +144,7 @@ def _get_branding_settings(chat_settings):
         "company_email": chat_settings.company_email or "",
         "company_address": chat_settings.company_address or "",
         "enable_save_contact": 1 if chat_settings.enable_save_contact else 0,
+        "vcard_contact_name": chat_settings.vcard_contact_name or "",
         "instagram_url": chat_settings.instagram_url or "",
         "tiktok_url": chat_settings.tiktok_url or "",
         "facebook_url": chat_settings.facebook_url or "",

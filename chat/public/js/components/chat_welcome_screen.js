@@ -132,13 +132,14 @@ export default class ChatWelcome {
     // Contact card (Apple-style, rectangle avatar)
     let contact_card_html = '';
     if (enable_save) {
+      const card_name = brand.vcard_contact_name || brand.name || 'Contact';
       contact_card_html = `
         <a href="/api/method/chat.api.contact.download_vcard" class="chat-contact-card">
           <div class='chat-contact-card-avatar'>
-            ${brand.logo ? `<img src='${brand.logo}' alt=''>` : `<span>${(brand.name || 'C')[0]}</span>`}
+            ${brand.logo ? `<img src='${brand.logo}' alt=''>` : `<span>${(card_name)[0]}</span>`}
           </div>
           <div class='chat-contact-card-info'>
-            <span class='chat-contact-card-name'>${brand.name || 'Contact'}</span>
+            <span class='chat-contact-card-name'>${card_name}</span>
             <span class='chat-contact-card-detail'>${__('Tap to save to contacts')}</span>
           </div>
           <svg class='chat-contact-card-arrow' viewBox="0 0 24 24" width="16" height="16"><path fill="currentColor" d="M12 4l-1.41 1.41L16.17 11H4v2h12.17l-5.58 5.59L12 20l8-8z"/></svg>

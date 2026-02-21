@@ -41,7 +41,15 @@
   "contact_channels_column",
   "company_email",
   "company_address",
+  "vcard_section",
   "enable_save_contact",
+  "vcard_contact_name",
+  "vcard_organization",
+  "vcard_title",
+  "vcard_column",
+  "vcard_photo",
+  "vcard_website",
+  "vcard_note",
   "social_links_section",
   "instagram_url",
   "tiktok_url",
@@ -289,7 +297,60 @@
    "fieldname": "enable_save_contact",
    "fieldtype": "Check",
    "label": "Enable Save Contact",
-   "description": "Show a card that lets users download a vCard"
+   "description": "Show the Save to Contact card on the welcome screen"
+  },
+  {
+   "fieldname": "vcard_section",
+   "fieldtype": "Section Break",
+   "label": "Save to Contact (vCard)",
+   "description": "Configure the downloadable contact card. Phone, email, address, WhatsApp, Telegram, and social links are pulled from the sections above.",
+   "collapsible": 1
+  },
+  {
+   "fieldname": "vcard_contact_name",
+   "fieldtype": "Data",
+   "label": "Contact Display Name",
+   "description": "Full name shown in the contact card (e.g. AddisFly | Customer Service). Falls back to Brand Name.",
+   "depends_on": "enable_save_contact"
+  },
+  {
+   "fieldname": "vcard_organization",
+   "fieldtype": "Data",
+   "label": "Organization",
+   "description": "Company name in the vCard (e.g. AddisFly). Falls back to Brand Name.",
+   "depends_on": "enable_save_contact"
+  },
+  {
+   "fieldname": "vcard_title",
+   "fieldtype": "Data",
+   "label": "Job Title",
+   "description": "Role or department (e.g. Customer Service, Sales Team)",
+   "depends_on": "enable_save_contact"
+  },
+  {
+   "fieldname": "vcard_column",
+   "fieldtype": "Column Break"
+  },
+  {
+   "fieldname": "vcard_photo",
+   "fieldtype": "Attach Image",
+   "label": "Contact Photo",
+   "description": "Square image for the contact card. If empty, Brand Logo is used.",
+   "depends_on": "enable_save_contact"
+  },
+  {
+   "fieldname": "vcard_website",
+   "fieldtype": "Data",
+   "label": "Website URL",
+   "description": "e.g. https://addisfly.com \u2014 added to the vCard",
+   "depends_on": "enable_save_contact"
+  },
+  {
+   "fieldname": "vcard_note",
+   "fieldtype": "Small Text",
+   "label": "Contact Note",
+   "description": "Optional note included in the vCard (e.g. Your wings to the world)",
+   "depends_on": "enable_save_contact"
   },
   {
    "fieldname": "social_links_section",
@@ -384,7 +445,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-02-21 14:00:00.000000",
+ "modified": "2026-02-21 15:00:00.000000",
  "modified_by": "Administrator",
  "module": "Frappe Chat",
  "name": "Chat Settings",
