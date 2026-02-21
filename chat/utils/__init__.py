@@ -130,6 +130,7 @@ def _get_branding_settings(chat_settings):
         "online_status_text": chat_settings.online_status_text or "",
         "offline_status_text": chat_settings.offline_status_text or "",
         "cta_label": chat_settings.cta_label or "Start Conversation",
+        "cta_button_effect": chat_settings.cta_button_effect or "None",
         "bubble_label": chat_settings.bubble_label or "",
         "bubble_style": chat_settings.bubble_style or "Icon + Label",
         "bubble_icon": chat_settings.bubble_icon or "Chat",

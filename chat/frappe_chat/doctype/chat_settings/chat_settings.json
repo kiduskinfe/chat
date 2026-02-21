@@ -21,6 +21,7 @@
   "online_status_text",
   "offline_status_text",
   "cta_label",
+  "cta_button_effect",
   "bubble_label",
   "bubble_style",
   "bubble_icon",
@@ -141,6 +142,14 @@
      "fieldname": "cta_label",
      "fieldtype": "Data",
      "label": "CTA Button Label"
+    },
+    {
+     "default": "Glow",
+     "fieldname": "cta_button_effect",
+     "fieldtype": "Select",
+     "label": "CTA Button Effect",
+     "options": "None\nGlow\nLevitate\nPulse\nBounce",
+     "description": "Visual effect on the main CTA button to attract clicks. Glow = pulsing shadow, Levitate = floating animation, Pulse = scale pulse, Bounce = gentle bounce"
     },
     {
      "fieldname": "bubble_label",

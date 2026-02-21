@@ -534,8 +534,8 @@ $height: 582px;
   // Tilted corner ribbon — LEFT side, clean smooth edges
   .chat-247-ribbon {
     position: absolute;
-    top: 24px;
-    left: -44px;
+    top: 26px;
+    left: -48px;
     background: var(--primary-color, #E31E24);
     color: #fff;
     font-size: 16px;
@@ -578,7 +578,7 @@ $height: 582px;
   }
 
   .chat-welcome-hero {
-    padding: 24px 24px 10px;
+    padding: 30px 24px 10px;
     text-align: center;
     flex-shrink: 0;
 
@@ -635,13 +635,47 @@ $height: 582px;
       border-radius: 10px;
       font-size: $font-size-base;
       font-weight: 600;
-      padding: 11px;
+      padding: 12px;
+      margin: 4px 0;
       transition: all 0.2s ease;
       &:hover {
         transform: translateY(-1px);
         box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
       }
+
+      // CTA Effects
+      &.cta-effect-glow {
+        animation: ctaGlow 2s ease-in-out infinite;
+      }
+      &.cta-effect-levitate {
+        animation: ctaLevitate 3s ease-in-out infinite;
+      }
+      &.cta-effect-pulse {
+        animation: ctaPulse 2s ease-in-out infinite;
+      }
+      &.cta-effect-bounce {
+        animation: ctaBounce 2s ease-in-out infinite;
+      }
     }
+  }
+
+  @keyframes ctaGlow {
+    0%, 100% { box-shadow: 0 0 8px rgba(var(--primary-rgb, 227, 30, 36), 0.3); }
+    50% { box-shadow: 0 0 22px rgba(var(--primary-rgb, 227, 30, 36), 0.6), 0 0 40px rgba(var(--primary-rgb, 227, 30, 36), 0.2); }
+  }
+  @keyframes ctaLevitate {
+    0%, 100% { transform: translateY(0); box-shadow: 0 4px 12px rgba(0,0,0,0.15); }
+    50% { transform: translateY(-5px); box-shadow: 0 10px 24px rgba(0,0,0,0.2); }
+  }
+  @keyframes ctaPulse {
+    0%, 100% { transform: scale(1); }
+    50% { transform: scale(1.03); }
+  }
+  @keyframes ctaBounce {
+    0%, 100% { transform: translateY(0); }
+    30% { transform: translateY(-6px); }
+    50% { transform: translateY(0); }
+    70% { transform: translateY(-3px); }
   }
 
   // Footer — text centered ON the separator line

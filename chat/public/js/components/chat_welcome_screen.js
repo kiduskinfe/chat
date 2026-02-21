@@ -90,6 +90,7 @@ export default class ChatWelcome {
     const footer_text = brand.footer_text || '';
     const footer_link = brand.footer_link || '';
     const cta_label = brand.cta_label || __('Start Conversation');
+    const cta_effect = (brand.cta_button_effect || 'None').toLowerCase();
     const is_online = this.profile.chat_status === 'Online';
     const status_text = is_online
       ? (brand.online_status_text || __('We are online'))
@@ -159,7 +160,7 @@ export default class ChatWelcome {
           <span class='status-dot'></span>
           <span>${__(status_text)}</span>
         </div>
-        <button type='button' class='btn btn-primary btn-lg w-100' id='start-conversation'>
+        <button type='button' class='btn btn-primary btn-lg w-100 cta-effect-${cta_effect}' id='start-conversation'>
           ${__(cta_label)}
         </button>
         ${has_channels ? `
