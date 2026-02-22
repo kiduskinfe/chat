@@ -100,12 +100,86 @@ export default class ChatForm {
     return result;
   }
 
+  /** Clear all inline errors */
+  clear_errors() {
+    this.$chat_form.find('.chat-field-error').remove();
+    this.$chat_form.find('.chat-modern-input').removeClass('chat-input-error');
+    this.$chat_form.find('.chat-form-error-banner').remove();
+  }
+
+  /** Show inline error below a field */
+  show_field_error($field, message) {
+    $field.addClass('chat-input-error');
+    $field.closest('.form-group').append(
+      `<div class='chat-field-error'>${message}</div>`
+    );
+  }
+
+  /** Show error banner at top of form */
+  show_error_banner(message) {
+    this.$chat_form.find('.chat-form-error-banner').remove();
+    const banner = `<div class='chat-form-error-banner'>
+      <span>${message}</span>
+      <button type='button' class='chat-error-dismiss'>&times;</button>
+    </div>`;
+    this.$chat_form.find('.chat-form-container').prepend(banner);
+    this.$chat_form.find('.chat-error-dismiss').on('click', function() {
+      $(this).closest('.chat-form-error-banner').fadeOut(200, function() { $(this).remove(); });
+    });
+  }
+
+  /** Client-side validation — returns true if valid */
+  validate_fields() {
+    this.clear_errors();
+    const values = this.get_values();
+    let valid = true;
+
+    // Full name required
+    if (!values.full_name || !values.full_name.trim()) {
+      this.show_field_error($('#chat-fullname'), __('Name is required'));
+      valid = false;
+    }
+
+    // Email required + format check
+    if (!values.email || !values.email.trim()) {
+      this.show_field_error($('#chat-email'), __('Email is required'));
+      valid = false;
+    } else if (!/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(values.email.trim())) {
+      this.show_field_error($('#chat-email'), __('Enter a valid email'));
+      valid = false;
+    }
+
+    // Message required
+    if (!values.message || !values.message.trim()) {
+      this.show_field_error($('#chat-message-area'), __('Please enter a message'));
+      valid = false;
+    }
+
+    // Focus first invalid field
+    if (!valid) {
+      const $first_err = this.$chat_form.find('.chat-input-error').first();
+      if ($first_err.length) $first_err.focus();
+    }
+
+    return valid;
+  }
+
   async validate_form() {
+    // Client-side validation first — no server call if invalid
+    if (!this.validate_fields()) {
+      return;
+    }
+
+    const $btn = $('#submit-form');
+    const original_text = $btn.text();
+    $btn.prop('disabled', true).text(__('Sending...'));
+
     try {
       const form_values = this.get_values();
       const res = await create_guest(form_values);
 
       if (!res) {
+        $btn.prop('disabled', false).text(original_text);
         return;
       }
       const query_message = {
@@ -133,7 +207,15 @@ export default class ChatForm {
         profile: profile,
       });
     } catch (error) {
-      //pass
+      $btn.prop('disabled', false).text(original_text);
+      // Show server error inline instead of full-page modal
+      const msg = (error && error.message) || __('Something went wrong. Please try again.');
+      this.show_error_banner(msg);
+      // Dismiss any Frappe modal that may have appeared
+      if (window.cur_dialog) {
+        try { window.cur_dialog.hide(); } catch(e) {}
+      }
+      $('.modal.show').modal('hide');
     }
   }
 
@@ -142,6 +224,11 @@ export default class ChatForm {
     const me = this;
     $('#submit-form').on('click', function () {
       me.validate_form();
+    });
+    // Clear field error on input
+    this.$chat_form.on('input', '.chat-modern-input', function() {
+      $(this).removeClass('chat-input-error');
+      $(this).closest('.form-group').find('.chat-field-error').remove();
     });
     $('.chat-back-btn').on('click', function () {
       if (me.on_back) me.on_back();

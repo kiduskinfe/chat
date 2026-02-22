@@ -141,6 +141,21 @@
    "description": "Used for CTA buttons (Start Chat, Send Message). Falls back to Primary Color if empty."
   },
   {
+   "default": "0",
+   "depends_on": "eval:doc.button_color || doc.primary_color",
+   "description": "When enabled, the send button in the chat space will use the brand/button color instead of the default blue.",
+   "fieldname": "apply_brand_to_send_button",
+   "fieldtype": "Check",
+   "label": "Apply Brand Color to Send Button"
+  },
+  {
+   "fieldname": "apply_brand_to_send_button",
+   "fieldtype": "Check",
+   "label": "Apply Brand Color to Send Button",
+   "description": "When enabled, the send button in the chat will use the brand/button color instead of the default blue",
+   "default": "0"
+  },
+  {
    "fieldname": "branding_column",
    "fieldtype": "Column Break"
   },
@@ -445,7 +460,7 @@
  "index_web_pages_for_search": 1,
  "issingle": 1,
  "links": [],
- "modified": "2026-02-21 15:00:00.000000",
+ "modified": "2026-02-22 12:00:00.000000",
  "modified_by": "Administrator",
  "module": "Frappe Chat",
  "name": "Chat Settings",

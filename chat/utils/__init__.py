@@ -125,6 +125,7 @@ def _get_branding_settings(chat_settings):
         "logo": brand_logo,
         "primary_color": chat_settings.primary_color,
         "button_color": chat_settings.button_color or "",
+        "apply_brand_to_send_button": 1 if getattr(chat_settings, 'apply_brand_to_send_button', 0) else 0,
         "welcome_title": chat_settings.welcome_title or "",
         "welcome_subtitle": chat_settings.welcome_subtitle or "",
         "online_status_text": chat_settings.online_status_text or "",

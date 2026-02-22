@@ -72,11 +72,14 @@ frappe.Chat = class {
       }
 
       this.create_app();
-      if (this.brand.primary_color) {
-        this.$app_element.css('--primary-color', this.brand.primary_color);
-      }
+      // Only apply brand color to CTA buttons and bubble — NOT to --primary-color
+      // which would override message bubbles and send button
       if (this.brand.button_color || this.brand.primary_color) {
         this.$app_element.css('--chat-btn-color', this.brand.button_color || this.brand.primary_color);
+      }
+      // Optionally apply brand color to send button if setting is enabled
+      if (this.brand.apply_brand_to_send_button && (this.brand.button_color || this.brand.primary_color)) {
+        this.$app_element.css('--chat-send-btn-color', this.brand.button_color || this.brand.primary_color);
       }
       await frappe.socketio.init(res.socketio_port);
 
