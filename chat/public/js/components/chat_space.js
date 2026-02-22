@@ -29,17 +29,11 @@ export default class ChatSpace {
   }
 
   setup_header() {
-    const brand = this.profile.brand || frappe.Chat.settings.brand || {};
-    // For guest rooms, show the brand logo if available
-    if (this.profile.room_type === 'Guest' && brand.logo) {
-      this.avatar_html = `<img class='chat-header-brand-logo' src='${brand.logo}' alt='${brand.name || ''}'>`;
-    } else {
-      this.avatar_html = get_avatar_html(
-        this.profile.room_type,
-        this.profile.opposite_person_email,
-        this.profile.room_name
-      );
-    }
+    this.avatar_html = get_avatar_html(
+      this.profile.room_type,
+      this.profile.opposite_person_email,
+      this.profile.room_name
+    );
     const header_html = `
 			<div class='chat-header'>
 				${

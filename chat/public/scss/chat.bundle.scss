@@ -81,7 +81,7 @@ $height: 582px;
 
 .chat-bubble {
   cursor: pointer;
-  background: var(--chat-btn-color, var(--primary-color));
+  background: var(--chat-bubble-color, var(--primary-color));
   color: var(--white);
   border-radius: 100px;
   font-weight: 600;
@@ -398,13 +398,13 @@ $height: 582px;
       height: 2rem;
       width: 2rem;
       border-radius: 50%;
-      background: var(--chat-send-btn-color, var(--blue-500));
+      background: var(--chat-send-btn-color, var(--text-color));
       display: flex;
       align-items: center;
       justify-content: center;
       transition: all 0.15s ease;
       svg {
-        fill: var(--white);
+        fill: var(--card-bg);
       }
       &:hover {
         transform: scale(1.05);
@@ -550,7 +550,7 @@ $height: 582px;
     position: absolute;
     top: 26px;
     left: -48px;
-    background: var(--chat-btn-color, var(--primary-color, #E31E24));
+    background: var(--chat-badge-color, var(--primary-color, #E31E24));
     color: #fff;
     font-size: 16px;
     font-weight: 900;
